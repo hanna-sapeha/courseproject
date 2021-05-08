@@ -18,7 +18,7 @@ public class Review {
     @Column
     private Long id;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "user_id")
     private User user;
     @Column
     private String feedback;

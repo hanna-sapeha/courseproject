@@ -33,6 +33,6 @@ public class User {
     @Column
     private String password;
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_role")
+    @JoinColumn(name = "role_id")
     private Role role;
 }

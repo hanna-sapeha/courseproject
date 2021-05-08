@@ -27,7 +27,7 @@
             <column name="password" type="varchar(80)">
                 <constraints nullable="false"/>
             </column>
-            <column name="id_role" type="int">
+            <column name="role_id" type="int">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -43,7 +43,7 @@
     </changeSet>
 
     <changeSet id="2" author="hanna.sapeha@protonmail.com">
-        <addForeignKeyConstraint baseColumnNames="id_role"
+        <addForeignKeyConstraint baseColumnNames="role_id"
                                  baseTableName="user"
                                  constraintName="fk_user_role"
                                  onDelete="CASCADE"
@@ -73,7 +73,7 @@
             <column name="patronymic" value="admin"/>
             <column name="email" value="admin"/>
             <column name="password" value="$2y$12$vRbyOlbzlOElC1z7EqJOi.wB9no/WVxg3an7NoJNls6WKZ3PcVGoi"/>
-            <column name="id_role" value="1" valueComputed="SELECT r.id FROM role WHERE r.name='ADMINISTRATOR'"/>
+            <column name="role_id" value="1" valueComputed="SELECT r.id FROM role WHERE r.name='ADMINISTRATOR'"/>
         </insert>
     </changeSet>
 
@@ -82,7 +82,7 @@
             <column name="id" type="int(11)" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="id_user" type="int">
+            <column name="user_id" type="int">
                 <constraints nullable="false"/>
             </column>
             <column name="feedback" type="varchar(200)">
@@ -97,7 +97,7 @@
     </changeSet>
 
     <changeSet id="6" author="hanna.sapeha@protonmail.com">
-        <addForeignKeyConstraint baseColumnNames="id_user"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="review"
                                  constraintName="fk_user_review"
                                  onDelete="CASCADE"
