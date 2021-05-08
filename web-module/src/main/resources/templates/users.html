@@ -36,9 +36,9 @@
                 <div class="input-group mb-3">
                     <form action="#" th:action="@{'/users/change-role?id=' + ${user.id}}" th:method="post">
                         <label for="role" class="form-control" th:text="${user.roleName}">Role</label>
-                        <select id="role" class="form-select" name="role">
+                        <select id="role" class="form-select" name="roleId">
                             <option th:each="role : ${roles}" th:disabled="${user.roleName}==${role.roleName}"
-                                    th:value="${role.id}" th:text="${role.roleName}" name="role">Role
+                                    th:value="${role.id}" th:text="${role.roleName}" name="roleId">Role
                             </option>
                         </select>
                         <button th:disabled="${authUser.id}==${user.id}"

@@ -16,22 +16,24 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.hanna.sapeha.app.constant.HandlerConstants.ADMIN_REDIRECT_URL;
+import static com.hanna.sapeha.app.constant.HandlerConstants.USERS_URL;
 
 public class AppSuccessHandler implements AuthenticationSuccessHandler {
     private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final Map<String, String> roleTargetUrlMap = new HashMap<>();
+
+    public AppSuccessHandler() {
+        roleTargetUrlMap.put(RolesEnum.ADMINISTRATOR.name(), USERS_URL);
+    }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws IOException, ServletException {
         String targetUrl = determineTargetUrl(authentication);
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
 
     private String determineTargetUrl(Authentication authentication) {
-        Map<String, String> roleTargetUrlMap = new HashMap<>();
-        roleTargetUrlMap.put(RolesEnum.ADMINISTRATOR.name(), ADMIN_REDIRECT_URL);
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority authority : authorities) {
             String authorityName = authority.getAuthority();

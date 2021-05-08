@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 @Configuration
 public class PersistenceConfig {
+
     @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean containerEntityManager = new LocalContainerEntityManagerFactoryBean();

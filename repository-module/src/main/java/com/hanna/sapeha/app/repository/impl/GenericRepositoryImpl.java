@@ -23,7 +23,7 @@ public abstract class GenericRepositoryImpl<I, T> implements GenericRepository<I
     @Override
     @SuppressWarnings("unchecked")
     public List<T> findAll() {
-        String queryString = "FROM " + entityClass.getName() + " c";
+        String queryString = "FROM " + entityClass.getName();
         Query query = entityManager.createQuery(queryString);
         return query.getResultList();
     }
@@ -41,5 +41,13 @@ public abstract class GenericRepositoryImpl<I, T> implements GenericRepository<I
     @Override
     public void remove(T entity) {
         entityManager.remove(entity);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public I getCount() {
+        String queryString = "SELECT COUNT(*) FROM " + entityClass.getName();
+        Query query = entityManager.createQuery(queryString);
+        return (I) query.getSingleResult();
     }
 }

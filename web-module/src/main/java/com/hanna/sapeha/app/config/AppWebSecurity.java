@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.hanna.sapeha.app.constant.HandlerConstants.REVIEWS_URL;
+import static com.hanna.sapeha.app.constant.HandlerConstants.USERS_URL;
+
 @Configuration
 @RequiredArgsConstructor
 public class AppWebSecurity extends WebSecurityConfigurerAdapter {
@@ -26,9 +29,9 @@ public class AppWebSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/users/add", "/send-email")
+                .antMatchers(USERS_URL + "/add")
                 .permitAll()
-                .antMatchers("/users/**", "/reviews/**")
+                .antMatchers(USERS_URL + "/**", REVIEWS_URL + "/**")
                 .hasAuthority(RolesEnum.ADMINISTRATOR.name())
                 .and()
                 .formLogin()

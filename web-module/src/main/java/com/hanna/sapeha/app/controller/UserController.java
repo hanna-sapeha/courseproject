@@ -22,8 +22,10 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
+import static com.hanna.sapeha.app.constant.HandlerConstants.USERS_URL;
+
 @Controller
-@RequestMapping("/users")
+@RequestMapping(USERS_URL)
 @RequiredArgsConstructor
 @Log4j2
 public class UserController {
@@ -39,20 +41,20 @@ public class UserController {
 
     @PostMapping("/add")
     public String addUser(@Valid UserDTO user,
-                          @RequestParam(value = "role", required = false) Long idRole,
+                          @RequestParam(value = "roleId", required = false) Long roleId,
                           BindingResult errors) {
         if (errors.hasErrors()) {
             return "register-user";
         } else {
-            userService.add(user, idRole);
-            return "redirect:/users";
+            userService.addAndSendEmail(user, roleId);
+            return "redirect:" + USERS_URL;
         }
     }
 
     @GetMapping
     public String getAllUsers(Model model,
-                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-                              @RequestParam(value = "page", required = false, defaultValue = "1") Integer pageNumber) {
+                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
+                              @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber) {
 
         PageDTO<UserDTO> page = userService.getAllByPagination(pageNumber, pageSize);
         model.addAttribute("page", page);
@@ -73,19 +75,19 @@ public class UserController {
                 userService.removeById(id);
             }
         }
-        return "redirect:/users";
+        return "redirect:" + USERS_URL;
     }
 
     @PostMapping("/change-password")
     public String changePassword(@RequestParam(value = "userIdForChangePass", required = false) Long id) {
         userService.changePasswordById(id);
-        return "redirect:/users";
+        return "redirect:" + USERS_URL;
     }
 
     @PostMapping("/change-role")
     public String changeRole(@RequestParam(value = "id") Long idUser,
-                             @RequestParam(value = "role") Long idRole) {
-        userService.changeRoleById(idUser, idRole);
-        return "redirect:/users";
+                             @RequestParam(value = "roleId") Long roleId) {
+        userService.changeRoleById(idUser, roleId);
+        return "redirect:" + USERS_URL;
     }
 }

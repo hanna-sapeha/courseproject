@@ -7,6 +7,7 @@ import com.hanna.sapeha.app.service.converter.ReviewConverter;
 import com.hanna.sapeha.app.service.exception.ServiceException;
 import com.hanna.sapeha.app.service.model.PageDTO;
 import com.hanna.sapeha.app.service.model.ReviewDTO;
+import com.hanna.sapeha.app.service.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public PageDTO<ReviewDTO> getAllByPagination(Integer pageNumber, Integer pageSize) {
+    public PageDTO<ReviewDTO> getAllByPagination(int pageNumber, int pageSize) {
         PageDTO<ReviewDTO> page = new PageDTO<>();
         List<Review> reviews = reviewRepository.findAll(pageNumber, pageSize);
         List<ReviewDTO> reviewDTOs = reviewConverter.convert(reviews);
         page.getObjects().addAll(reviewDTOs);
-        Long countReviews = reviewRepository.getCountAllReviews();
-        List<Integer> numbersOfPages = IntStream.rangeClosed(1, (int) Math.ceil((double) countReviews / pageSize))
+        Long countReviews = reviewRepository.getCount();
+        List<Integer> numbersOfPages = IntStream.rangeClosed(1, ServiceUtil.getNumbersOfPages(pageSize, countReviews))
                 .boxed()
                 .collect(Collectors.toList());
         page.getNumbersOfPage().addAll(numbersOfPages);

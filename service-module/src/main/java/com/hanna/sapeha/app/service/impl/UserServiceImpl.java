@@ -10,6 +10,7 @@ import com.hanna.sapeha.app.service.converter.UserConverter;
 import com.hanna.sapeha.app.service.exception.ServiceException;
 import com.hanna.sapeha.app.service.model.PageDTO;
 import com.hanna.sapeha.app.service.model.UserDTO;
+import com.hanna.sapeha.app.service.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,13 +36,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public PageDTO<UserDTO> getAllByPagination(Integer pageNumber, Integer pageSize) {
+    public PageDTO<UserDTO> getAllByPagination(int pageNumber, int pageSize) {
         PageDTO<UserDTO> page = new PageDTO<>();
         List<User> users = userRepository.findAll(pageNumber, pageSize);
         List<UserDTO> userDTOs = userConverter.convert(users);
         page.getObjects().addAll(userDTOs);
-        Long countUsers = userRepository.getCountUsers();
-        List<Integer> numbersOfPages = IntStream.rangeClosed(1, (int) Math.ceil((double) countUsers / pageSize))
+        Long countUsers = userRepository.getCount();
+        List<Integer> numbersOfPages = IntStream.rangeClosed(1, ServiceUtil.getNumbersOfPages(pageSize, countUsers))
                 .boxed()
                 .collect(Collectors.toList());
         page.getNumbersOfPage().addAll(numbersOfPages);
@@ -50,26 +51,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void add(UserDTO userDTO, Long idRole) {
+    public void add(UserDTO userDTO, Long roleId) {
         User userByEmail = userRepository.getUserByEmail(userDTO.getEmail());
         if (Objects.isNull(userByEmail)) {
             User user = userConverter.convert(userDTO);
-            String password = RandomString.make(PASSWORD_LENGTH);
-            String encodedPassword = passwordEncoder.encode(password);
-            user.setPassword(encodedPassword);
             UUID uuid = UUID.randomUUID();
             user.setUniqueNumber(uuid);
-
-            Role role = roleRepository.findById(idRole);
+            if (Objects.isNull(userDTO.getPassword())) {
+                String password = RandomString.make(PASSWORD_LENGTH);
+                String encodedPassword = passwordEncoder.encode(password);
+                user.setPassword(encodedPassword);
+            }
+            Role role = roleRepository.findById(roleId);
             if (Objects.nonNull(role)) {
                 user.setRole(role);
             } else {
-                throw new ServiceException("Role does not exist");
+                throw new ServiceException("Role with id '" + roleId + "' does not exist");
             }
             userRepository.persist(user);
-            if (!user.getEmail().isBlank()) {
-                mailSender.send(user.getEmail(), password);
-            }
         } else {
             throw new ServiceException("User with email: " + userDTO.getEmail() + " already exist");
         }
@@ -82,7 +81,7 @@ public class UserServiceImpl implements UserService {
         if (Objects.nonNull(user)) {
             userRepository.remove(user);
         } else {
-            throw new ServiceException("User does not exist");
+            throw new ServiceException("User with id '" + id + "' does not exist");
         }
     }
 
@@ -96,19 +95,28 @@ public class UserServiceImpl implements UserService {
             user.setPassword(newEncodedPassword);
             mailSender.send(user.getEmail(), newPassword);
         } else {
-            throw new ServiceException("User does not exist");
+            throw new ServiceException("User with id '" + id + "' does not exist");
         }
     }
 
     @Override
     @Transactional
-    public void changeRoleById(Long idUser, Long idRole) {
-        User user = userRepository.findById(idUser);
+    public void changeRoleById(Long userId, Long roleId) {
+        User user = userRepository.findById(userId);
         if (Objects.nonNull(user)) {
-            Role role = roleRepository.findById(idRole);
+            Role role = roleRepository.findById(roleId);
             user.setRole(role);
         } else {
-            throw new ServiceException("User does not exist");
+            throw new ServiceException("User with id '" + userId + "' does not exist");
         }
+    }
+
+    @Override
+    public void addAndSendEmail(UserDTO user, Long roleId) {
+        String password = RandomString.make(PASSWORD_LENGTH);
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+        add(user, roleId);
+        mailSender.send(user.getEmail(), password);
     }
 }

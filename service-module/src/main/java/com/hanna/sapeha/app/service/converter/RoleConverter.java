@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class RoleConverter {
+
     public List<RoleDTO> convert(List<Role> roles) {
         return roles.stream()
                 .map(this::convert)

@@ -3,10 +3,10 @@ package com.hanna.sapeha.app.repository.model;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
 @Entity
 @Table(name = "review")
 @Getter

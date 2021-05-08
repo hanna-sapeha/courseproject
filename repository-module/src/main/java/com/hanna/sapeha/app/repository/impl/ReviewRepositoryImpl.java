@@ -2,6 +2,7 @@ package com.hanna.sapeha.app.repository.impl;
 
 import com.hanna.sapeha.app.repository.ReviewRepository;
 import com.hanna.sapeha.app.repository.model.Review;
+import com.hanna.sapeha.app.repository.util.RepositoryUtil;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -12,8 +13,9 @@ import java.util.List;
 
 @Repository
 public class ReviewRepositoryImpl extends GenericRepositoryImpl<Long, Review> implements ReviewRepository {
+
     @Override
-    public List<Review> findAll(Integer pageNumber, Integer pageSize) {
+    public List<Review> findAll(int pageNumber, int pageSize) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
         countQuery.select(criteriaBuilder.count(countQuery.from(Review.class)));
@@ -25,18 +27,10 @@ public class ReviewRepositoryImpl extends GenericRepositoryImpl<Long, Review> im
 
         TypedQuery<Review> typedQuery = entityManager.createQuery(select);
         if (pageSize < count.intValue()) {
-            typedQuery.setFirstResult((pageNumber) * pageSize - pageSize);
+            typedQuery.setFirstResult(RepositoryUtil.getStartPosition(pageNumber, pageSize));
             typedQuery.setMaxResults(pageSize);
             return typedQuery.getResultList();
         }
         return typedQuery.getResultList();
-    }
-
-    @Override
-    public Long getCountAllReviews() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        countQuery.select(criteriaBuilder.count(countQuery.from(Review.class)));
-        return entityManager.createQuery(countQuery).getSingleResult();
     }
 }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.hanna.sapeha.app.constant.HandlerConstants.REVIEWS_URL;
+
 @Controller
-@RequestMapping("/reviews")
+@RequestMapping(REVIEWS_URL)
 @RequiredArgsConstructor
 @Log4j2
 public class ReviewController {
@@ -33,13 +35,13 @@ public class ReviewController {
     @PostMapping("/delete")
     public String deleteItems(@RequestParam(value = "id") Long id) {
         reviewService.removeById(id);
-        return "redirect:/reviews";
+        return "redirect:" + REVIEWS_URL;
     }
 
     @PostMapping("/change-status")
     public String changeStatus(@RequestParam(value = "selectedIds") List<Long> selectedIds,
                                @RequestParam(value = "allIds") List<Long> allIds) {
         reviewService.changeStatus(selectedIds, allIds);
-        return "redirect:/reviews";
+        return "redirect:" + REVIEWS_URL;
     }
 }

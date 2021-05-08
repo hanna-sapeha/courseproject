@@ -2,6 +2,7 @@ package com.hanna.sapeha.app.repository.impl;
 
 import com.hanna.sapeha.app.repository.UserRepository;
 import com.hanna.sapeha.app.repository.model.User;
+import com.hanna.sapeha.app.repository.util.RepositoryUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.EMAIL
 @Repository
 @Log4j2
 public class UserRepositoryImpl extends GenericRepositoryImpl<Long, User> implements UserRepository {
+
     @Override
     public User getUserByEmail(String email) {
         try {
@@ -31,7 +33,7 @@ public class UserRepositoryImpl extends GenericRepositoryImpl<Long, User> implem
             typedQuery.setParameter(parameter, email);
             return typedQuery.getSingleResult();
         } catch (NoResultException e) {
-            log.info("User with username '" + email + "' does not exit");
+            log.info("User with email '{}' does not exit", email);
             return null;
         }
     }
@@ -49,18 +51,10 @@ public class UserRepositoryImpl extends GenericRepositoryImpl<Long, User> implem
                 .orderBy(criteriaBuilder.asc(userRoot.get(EMAIL_PARAMETER)));
         TypedQuery<User> typedQuery = entityManager.createQuery(select);
         if (pageSize < count.intValue()) {
-            typedQuery.setFirstResult((pageNumber) * pageSize - pageSize);
+            typedQuery.setFirstResult(RepositoryUtil.getStartPosition(pageNumber, pageSize));
             typedQuery.setMaxResults(pageSize);
             return typedQuery.getResultList();
         }
         return typedQuery.getResultList();
-    }
-
-    @Override
-    public Long getCountUsers() {
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        countQuery.select(criteriaBuilder.count(countQuery.from(User.class)));
-        return entityManager.createQuery(countQuery).getSingleResult();
     }
 }

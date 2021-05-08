@@ -6,7 +6,8 @@ import com.hanna.sapeha.app.service.model.ReviewDTO;
 import java.util.List;
 
 public interface ReviewService {
-    PageDTO<ReviewDTO> getAllByPagination(Integer pageNumber, Integer pageSize);
+
+    PageDTO<ReviewDTO> getAllByPagination(int pageNumber, int pageSize);
 
     void removeById(Long id);
 
