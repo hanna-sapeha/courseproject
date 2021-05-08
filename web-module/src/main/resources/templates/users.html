@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+</head>
+<body>
+
+
+<div class="container">
+    <h1>Users</h1>
+    <a class="btn btn-primary bnt-sm mb-3" th:href="@{/users/add}"> Add User</a>
+    <form action="#" th:action="@{/users/delete}" th:method="post" id="checkbox_form_delete"></form>
+
+    <table border="1" class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Patronymic</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${page.objects}">
+            <td th:text="${user.firstname}"></td>
+            <td th:text="${user.lastname}"></td>
+            <td th:text="${user.patronymic}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <div class="input-group mb-3">
+                    <form action="#" th:action="@{'/users/change-role?id=' + ${user.id}}" th:method="post">
+                        <label for="role" class="form-control" th:text="${user.roleName}">Role</label>
+                        <select id="role" class="form-select" name="roleId">
+                            <option th:each="role : ${roles}" th:disabled="${user.roleName}==${role.roleName}"
+                                    th:value="${role.id}" th:text="${role.roleName}" name="roleId">Role
+                            </option>
+                        </select>
+                        <button th:disabled="${authUser.id}==${user.id}"
+                                class="btn btn-primary form-control bnt-sm mb-3"
+                                type="submit">Change role
+                        </button>
+                    </form>
+                </div>
+            </td>
+            <td>
+                <input name="selected" type="checkbox" th:value="${user.id}" form="checkbox_form_delete"
+                       th:disabled="${authUser.id}==${user.id}"/>
+            </td>
+            <td>
+                <form action="#" th:action="@{/users/change-password}" th:method="post">
+                    <lable for="changePass"></lable>
+                    <input type="hidden" name="userIdForChangePass" th:value="${user.id}" id="changePass">
+                    <button type="submit" class="btn btn-primary bnt-sm mb-3">Change password</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="pagination" th:if="${page.numbersOfPage.size() > 0}">
+        <li class="page-item" th:each="pageNumber : ${page.numbersOfPage}">
+            <a class="page-link" th:href="@{'/users?page=' + ${pageNumber}}"
+               th:text="${pageNumber}" name="page" th:value="${pageNumber}"></a>
+        </li>
+    </ul>
+
+    <button type="submit" value="Submit" class="btn btn-primary bnt-sm mb-3" form="checkbox_form_delete">Delete selected
+        users
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+</body>
+</html>
