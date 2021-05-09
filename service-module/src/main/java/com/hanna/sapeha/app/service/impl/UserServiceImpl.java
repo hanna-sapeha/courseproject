@@ -4,6 +4,7 @@ import com.hanna.sapeha.app.repository.RoleRepository;
 import com.hanna.sapeha.app.repository.UserRepository;
 import com.hanna.sapeha.app.repository.model.Role;
 import com.hanna.sapeha.app.repository.model.User;
+import com.hanna.sapeha.app.repository.model.enums.RolesEnum;
 import com.hanna.sapeha.app.service.MailSender;
 import com.hanna.sapeha.app.service.UserService;
 import com.hanna.sapeha.app.service.converter.UserConverter;
@@ -12,6 +13,7 @@ import com.hanna.sapeha.app.service.model.PageDTO;
 import com.hanna.sapeha.app.service.model.UserDTO;
 import com.hanna.sapeha.app.service.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ import static com.hanna.sapeha.app.service.constant.UserServiceConstants.PASSWOR
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserConverter userConverter;
@@ -54,14 +57,7 @@ public class UserServiceImpl implements UserService {
     public void add(UserDTO userDTO, Long roleId) {
         User userByEmail = userRepository.getUserByEmail(userDTO.getEmail());
         if (Objects.isNull(userByEmail)) {
-            User user = userConverter.convert(userDTO);
-            UUID uuid = UUID.randomUUID();
-            user.setUniqueNumber(uuid);
-            if (Objects.isNull(userDTO.getPassword())) {
-                String password = RandomString.make(PASSWORD_LENGTH);
-                String encodedPassword = passwordEncoder.encode(password);
-                user.setPassword(encodedPassword);
-            }
+            User user = getUserWithPasswordAndUuid(userDTO);
             Role role = roleRepository.findById(roleId);
             if (Objects.nonNull(role)) {
                 user.setRole(role);
@@ -118,5 +114,42 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
         add(user, roleId);
         mailSender.send(user.getEmail(), password);
+    }
+
+    @Override
+    @Transactional
+    public void add(UserDTO userDTO) {
+        User userByEmail = userRepository.getUserByEmail(userDTO.getEmail());
+        if (Objects.isNull(userByEmail)) {
+            User user = getUserWithPasswordAndUuid(userDTO);
+            String roleName = userDTO.getRoleName();
+            try {
+                RolesEnum roleEnum = RolesEnum.valueOf(roleName);
+                Role role = roleRepository.findByName(roleEnum);
+                if (Objects.nonNull(role)) {
+                    user.setRole(role);
+                } else {
+                    throw new ServiceException("Role with name '" + userDTO.getRoleName() + "' does not exist");
+                }
+                userRepository.persist(user);
+            } catch (IllegalArgumentException e) {
+                log.error(e.getMessage(), e);
+                throw new ServiceException("Role with name '" + userDTO.getRoleName() + "' does not exist");
+            }
+        } else {
+            throw new ServiceException("User with email: " + userDTO.getEmail() + " already exist");
+        }
+    }
+
+    private User getUserWithPasswordAndUuid(UserDTO userDTO) {
+        User user = userConverter.convert(userDTO);
+        UUID uuid = UUID.randomUUID();
+        user.setUniqueNumber(uuid);
+        if (Objects.isNull(userDTO.getPassword())) {
+            String password = RandomString.make(PASSWORD_LENGTH);
+            String encodedPassword = passwordEncoder.encode(password);
+            user.setPassword(encodedPassword);
+        }
+        return user;
     }
 }

@@ -88,7 +88,7 @@
             <column name="feedback" type="varchar(200)">
                 <constraints nullable="false"/>
             </column>
-            <column  name="date_added" type="date" defaultValueComputed="(NOW())">
+            <column name="date_added" type="date" defaultValueComputed="(NOW())">
             </column>
             <column name="is_active" type="boolean">
                 <constraints nullable="false"/>
@@ -100,6 +100,85 @@
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="review"
                                  constraintName="fk_user_review"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+    </changeSet>
+
+    <changeSet id="7" author="hanna.sapeha@protonmail.com">
+        <createTable tableName="article">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="unique_number" type="char(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_added" type="date" defaultValueComputed="(NOW())">
+            </column>
+            <column name="title" type="varchar(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="comment">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_added" type="date" defaultValueComputed="(NOW())">
+            </column>
+            <column name="content" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="8" author="hanna.sapeha@protonmail.com">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="article"
+                                 constraintName="fk_user_article"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="comment"
+                                 constraintName="fk_user_comments"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+        <addForeignKeyConstraint baseColumnNames="article_id"
+                                 baseTableName="comment"
+                                 constraintName="fk_comments_article"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="article"/>
+    </changeSet>
+
+    <changeSet id="9" author="hanna.sapeha@protonmail.com">
+        <createTable tableName="user_details">
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="varchar(80)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="telephone" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_details"
+                                 constraintName="fk_user_user_details"
                                  onDelete="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="user"/>

@@ -35,4 +35,11 @@ public class User {
     @ManyToOne(optional = false)
     @JoinColumn(name = "role_id")
     private Role role;
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private UserDetails userDetails;
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.lang.NonNull;
 
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Setter
 public class UserDTO {
     private Long id;
+    @Null
     private UUID uniqueNumber;
     @NonNull
     @Size(min = 2, max = 20, message = "characters count should be in the range between 2 and 20")
@@ -26,6 +28,7 @@ public class UserDTO {
     @Pattern(regexp = "^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$",
             message = "invalid e-mail, should match the template 'example@example.ex'")
     private String email;
+    @Null
     private String password;
     private String roleName;
 }
