@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+</head>
+<body>
+<form action="#" th:action="@{/profile/update-user}" th:object="${userProfileDTO}" method="post">
+  <table>
+    <tr>
+      <td>Firstname:</td>
+      <td><input type="text" th:field="*{firstname}" th:min="2" th:maxlength="40"/></td>
+      <td th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Firstname Error</td>
+    </tr>
+    <tr>
+      <td>Lastname:</td>
+      <td><input type="text" th:field="*{lastname}" th:min="2" th:maxlength="100"/></td>
+      <td th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Lastname Error</td>
+    </tr>
+    <tr>
+      <td>Address:</td>
+      <td><input type="text" th:field="*{address}" th:min="2" th:maxlength="100"/></td>
+      <td th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</td>
+    </tr>
+    <tr>
+      <td>Telephone:</td>
+      <td><input type="text" th:field="*{telephone}" th:min="2" th:maxlength="100"/></td>
+      <td th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}">Telephone Error</td>
+    </tr>
+    <tr>
+      <td>
+        <button type="submit">Submit</button>
+      </td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

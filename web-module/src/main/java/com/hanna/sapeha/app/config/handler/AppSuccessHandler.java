@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.hanna.sapeha.app.constant.HandlerConstants.ARTICLE_URL;
 import static com.hanna.sapeha.app.constant.HandlerConstants.USERS_URL;
 
 public class AppSuccessHandler implements AuthenticationSuccessHandler {
@@ -24,6 +25,7 @@ public class AppSuccessHandler implements AuthenticationSuccessHandler {
 
     public AppSuccessHandler() {
         roleTargetUrlMap.put(RolesEnum.ADMINISTRATOR.name(), USERS_URL);
+        roleTargetUrlMap.put(RolesEnum.CUSTOMER_USER.name(), ARTICLE_URL);
     }
 
     @Override

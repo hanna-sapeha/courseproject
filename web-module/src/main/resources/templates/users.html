@@ -66,7 +66,7 @@
     <ul class="pagination" th:if="${page.numbersOfPage.size() > 0}">
         <li class="page-item" th:each="pageNumber : ${page.numbersOfPage}">
             <a class="page-link" th:href="@{'/users?page=' + ${pageNumber}}"
-               th:text="${pageNumber}" name="page" th:value="${pageNumber}"></a>
+               th:text="${pageNumber}" th:value="${pageNumber}"></a>
         </li>
     </ul>
 
