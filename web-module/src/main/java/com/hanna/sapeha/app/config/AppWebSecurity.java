@@ -5,6 +5,7 @@ import com.hanna.sapeha.app.config.handler.AppSuccessHandler;
 import com.hanna.sapeha.app.repository.model.enums.RolesEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,6 +16,7 @@ import static com.hanna.sapeha.app.constant.HandlerConstants.*;
 
 @Configuration
 @RequiredArgsConstructor
+@Order(1)
 public class AppWebSecurity extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;

@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.hanna.sapeha.app.constant.HandlerConstants.API_URL;
+import static com.hanna.sapeha.app.constant.HandlerConstants.USERS_URL;
+
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(API_URL + USERS_URL)
 @RequiredArgsConstructor
 @Log4j2
 public class UserAPIController {
