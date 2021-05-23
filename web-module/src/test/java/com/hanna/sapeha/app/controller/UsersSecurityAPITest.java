@@ -47,7 +47,6 @@ class UsersSecurityAPITest {
         ).andExpect(status().isCreated());
     }
 
-
     @Test
     void shouldUserWithWithWrongPassTryToGetAccessToAddUser() throws Exception {
         UserDTO user = getValidUser();
