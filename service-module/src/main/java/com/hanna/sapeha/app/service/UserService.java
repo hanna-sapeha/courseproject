@@ -2,7 +2,6 @@ package com.hanna.sapeha.app.service;
 
 import com.hanna.sapeha.app.service.model.PageDTO;
 import com.hanna.sapeha.app.service.model.UserDTO;
-import com.hanna.sapeha.app.service.model.UserProfileDTO;
 
 public interface UserService {
 
@@ -17,6 +16,8 @@ public interface UserService {
     void changeRoleById(Long idUser, Long idRole);
 
     void addAndSendEmail(UserDTO user, Long idRole);
+
+    void addAndSendEmail(UserDTO user);
 
     void add(UserDTO userDTO);
 }

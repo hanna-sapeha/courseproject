@@ -4,11 +4,14 @@ import com.hanna.sapeha.app.repository.model.Article;
 import com.hanna.sapeha.app.repository.model.Comment;
 import com.hanna.sapeha.app.repository.model.User;
 import com.hanna.sapeha.app.service.model.ArticleDTO;
+import com.hanna.sapeha.app.service.model.ArticleFormDTO;
 import com.hanna.sapeha.app.service.model.CommentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -49,6 +52,15 @@ public class ArticleConverter implements GeneralConverter<Article, ArticleDTO> {
         Article article = new Article();
         article.setTitle(articleDTO.getTitle());
         article.setContent(articleDTO.getContent());
+        article.setDateAdded(articleDTO.getDateAdded());
+        return article;
+    }
+
+    public Article convertDTOToEntity(ArticleFormDTO articleDTO) {
+        Article article = new Article();
+        article.setTitle(articleDTO.getTitle());
+        article.setContent(articleDTO.getContent());
+        article.setDateAdded(articleDTO.getDateAdded());
         return article;
     }
 }

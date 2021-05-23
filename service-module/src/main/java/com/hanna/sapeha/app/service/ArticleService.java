@@ -1,6 +1,7 @@
 package com.hanna.sapeha.app.service;
 
 import com.hanna.sapeha.app.service.model.ArticleDTO;
+import com.hanna.sapeha.app.service.model.ArticleFormDTO;
 import com.hanna.sapeha.app.service.model.PageDTO;
 
 import java.util.List;
@@ -18,5 +19,7 @@ public interface ArticleService {
 
     List<ArticleDTO> getArticles();
 
-    ArticleDTO add(ArticleDTO article);
+    ArticleDTO add(ArticleFormDTO article, String authorizedUserEmail);
+
+    ArticleDTO changeArticle(UUID articleUuid, ArticleFormDTO articleForm);
 }

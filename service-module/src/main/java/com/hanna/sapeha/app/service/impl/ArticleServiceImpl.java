@@ -8,6 +8,7 @@ import com.hanna.sapeha.app.service.ArticleService;
 import com.hanna.sapeha.app.service.converter.ArticleConverter;
 import com.hanna.sapeha.app.service.exception.ServiceException;
 import com.hanna.sapeha.app.service.model.ArticleDTO;
+import com.hanna.sapeha.app.service.model.ArticleFormDTO;
 import com.hanna.sapeha.app.service.model.PageDTO;
 import com.hanna.sapeha.app.service.util.ServiceUtil;
 import lombok.RequiredArgsConstructor;
@@ -69,9 +70,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional
     public void removeById(Long id) {
         Article article = articleRepository.findById(id);
-        if (Objects.nonNull(article)) {
-            articleRepository.remove(article);
-        }
+        articleRepository.remove(article);
     }
 
     @Override
@@ -83,15 +82,28 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
-    public ArticleDTO add(ArticleDTO articleDTO) {
+    public ArticleDTO add(ArticleFormDTO articleDTO, String authorizedUserEmail) {
         Article article = articleConverter.convertDTOToEntity(articleDTO);
-        User user = userRepository.findById(8L);
+        User user = userRepository.getUserByEmail(authorizedUserEmail);
         article.setUser(user);
         UUID uuid = UUID.randomUUID();
         article.setUuid(uuid);
+        if (Objects.isNull(article.getDateAdded())) {
+            LocalDate date = LocalDate.now();
+            article.setDateAdded(date);
+        }
+        articleRepository.persist(article);
+        return articleConverter.convertEntityToDTO(article);
+    }
+
+    @Override
+    @Transactional
+    public ArticleDTO changeArticle(UUID articleUuid, ArticleFormDTO articleForm) {
+        Article article = articleRepository.findByUuid(articleUuid);
+        article.setTitle(articleForm.getTitle());
+        article.setContent(articleForm.getContent());
         LocalDate date = LocalDate.now();
         article.setDateAdded(date);
-        articleRepository.persist(article);
         return articleConverter.convertEntityToDTO(article);
     }
 }

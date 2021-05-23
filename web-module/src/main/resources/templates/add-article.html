@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.rtl.css}">
+    <title>Create article</title>
+</head>
+<body>
+<div class="container">
+    <div class="row row-cols-lg-1">
+        <form action="#" th:action="@{/articles/add}" th:object="${articleFormDTO}" method="post">
+            <div class="form-group row">
+                <label for="dateAdded" class="col-sm-2 col-form-label">Date</label>
+                <div class="col-sm-10">
+                    <input type="date" class="datepicker form-control" id="dateAdded" placeholder="date"
+                           th:field="*{dateAdded}" required >
+                    <td th:if="${#fields.hasErrors('dateAdded')}" th:errors="*{dateAdded}">Name Error</td>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="title" class="col-sm-2 col-form-label">Title</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="title" placeholder="Title" minlength="2"
+                           maxlength="200" th:field="*{title}">
+                    <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</td>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="content" class="col-sm-2 col-form-label">Content</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="content" rows="3" maxlength="1000"
+                              th:field="*{content}"></textarea>
+                    <td th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Name Error</td>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

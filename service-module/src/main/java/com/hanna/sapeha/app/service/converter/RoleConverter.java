@@ -5,6 +5,7 @@ import com.hanna.sapeha.app.service.model.RoleDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -19,8 +20,10 @@ public class RoleConverter {
     public RoleDTO convert(Role role) {
         RoleDTO roleDTO = new RoleDTO();
         roleDTO.setId(role.getId());
-        roleDTO.setRoleEnumName(role.getRoleName().name());
-        roleDTO.setRoleName(role.getRoleName().getDescription());
+        if (Objects.nonNull(role.getRoleName())) {
+            roleDTO.setRoleEnumName(role.getRoleName().name());
+            roleDTO.setRoleName(role.getRoleName().getDescription());
+        }
         return roleDTO;
     }
 }
