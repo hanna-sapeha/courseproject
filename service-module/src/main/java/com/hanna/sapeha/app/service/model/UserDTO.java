@@ -12,6 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class UserDTO {
+    @Null
     private Long id;
     @Null
     private UUID uniqueNumber;

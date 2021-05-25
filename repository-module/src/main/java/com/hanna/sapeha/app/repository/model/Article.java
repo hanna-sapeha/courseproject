@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,17 +27,17 @@ public class Article {
     @Column
     private String title;
     private String content;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     private User user;
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             orphanRemoval = true
     )
     @JoinColumn(name = "article_id")
     @EqualsAndHashCode.Exclude
-    private Set<Comment> comments;
+    private Set<Comment> comments = new HashSet<>();
 }

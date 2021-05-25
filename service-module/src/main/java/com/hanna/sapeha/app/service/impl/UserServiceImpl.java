@@ -108,11 +108,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addAndSendEmail(UserDTO user, Long roleId) {
         String password = RandomString.make(PASSWORD_LENGTH);
         String encodedPassword = passwordEncoder.encode(password);
         user.setPassword(encodedPassword);
         add(user, roleId);
+        mailSender.send(user.getEmail(), password);
+    }
+
+    @Override
+    @Transactional
+    public void addAndSendEmail(UserDTO user) {
+        String password = RandomString.make(PASSWORD_LENGTH);
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+        add(user);
         mailSender.send(user.getEmail(), password);
     }
 

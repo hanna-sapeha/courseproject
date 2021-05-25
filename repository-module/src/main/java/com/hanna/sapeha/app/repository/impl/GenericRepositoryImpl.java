@@ -1,7 +1,8 @@
 package com.hanna.sapeha.app.repository.impl;
 
-
 import com.hanna.sapeha.app.repository.GenericRepository;
+import com.hanna.sapeha.app.repository.exception.RepositoryException;
+import lombok.extern.log4j.Log4j2;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+@Log4j2
 public abstract class GenericRepositoryImpl<I, T> implements GenericRepository<I, T> {
     @PersistenceContext
     protected EntityManager entityManager;
@@ -35,7 +37,12 @@ public abstract class GenericRepositoryImpl<I, T> implements GenericRepository<I
 
     @Override
     public T findById(I id) {
-        return entityManager.find(entityClass, id);
+        try {
+            return entityManager.find(entityClass, id);
+        } catch (IllegalArgumentException e) {
+            log.error(e.getMessage(), e);
+            throw new RepositoryException(String.format("%s with id %s does not exist", entityClass.getName(), id), e);
+        }
     }
 
     @Override

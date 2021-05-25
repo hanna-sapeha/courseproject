@@ -138,7 +138,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="article_id" type="int">
-                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
@@ -182,5 +181,25 @@
                                  onDelete="CASCADE"
                                  referencedColumnNames="id"
                                  referencedTableName="user"/>
+    </changeSet>
+
+    <changeSet id="10" author="hanna.sapeha@protonmail.com">
+        <createTable tableName="item">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(40)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unique_number" type="char(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="decimal(20,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summary" type="varchar(200)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

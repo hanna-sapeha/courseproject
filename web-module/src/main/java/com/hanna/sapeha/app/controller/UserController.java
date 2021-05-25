@@ -6,10 +6,9 @@ import com.hanna.sapeha.app.service.model.PageDTO;
 import com.hanna.sapeha.app.service.model.RoleDTO;
 import com.hanna.sapeha.app.service.model.UserDTO;
 import com.hanna.sapeha.app.service.model.UserLogin;
+import com.hanna.sapeha.app.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,16 +54,13 @@ public class UserController {
     public String getAllUsers(Model model,
                               @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
                               @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber) {
-
         PageDTO<UserDTO> page = userService.getAllByPagination(pageNumber, pageSize);
         model.addAttribute("page", page);
         List<RoleDTO> roles = roleService.getAll();
         model.addAttribute("roles", roles);
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        UserLogin user = (UserLogin) auth.getPrincipal();
-        model.addAttribute("authUser", user.getUser());
-        log.info(user.getUser().getRole());
+        UserLogin authorizedUser = ControllerUtil.getAuthorizedUser();
+        model.addAttribute("authUserId", authorizedUser.getId());
         return "users";
     }
 

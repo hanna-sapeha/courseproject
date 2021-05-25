@@ -18,8 +18,9 @@ public class Comment {
     @EqualsAndHashCode.Exclude
     private LocalDate dateAdded;
     private String content;
-    @ManyToOne(optional = false,
-            cascade = CascadeType.REFRESH)
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     @EqualsAndHashCode.Exclude
     private User user;

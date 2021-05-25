@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.rtl.css}">
 </head>
 <body>
-
 
 <div class="container">
     <h1>Users</h1>
@@ -41,7 +40,7 @@
                                     th:value="${role.id}" th:text="${role.roleName}" name="roleId">Role
                             </option>
                         </select>
-                        <button th:disabled="${authUser.id}==${user.id}"
+                        <button th:disabled="${authUserId}==${user.id}"
                                 class="btn btn-primary form-control bnt-sm mb-3"
                                 type="submit">Change role
                         </button>
@@ -50,7 +49,7 @@
             </td>
             <td>
                 <input name="selected" type="checkbox" th:value="${user.id}" form="checkbox_form_delete"
-                       th:disabled="${authUser.id}==${user.id}"/>
+                       th:disabled="${authUserId}==${user.id}"/>
             </td>
             <td>
                 <form action="#" th:action="@{/users/change-password}" th:method="post">
@@ -75,8 +74,6 @@
     </button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-        crossorigin="anonymous"></script>
+<script th:src="@{/js/bootstrap.bundle.js}"></script>
 </body>
 </html>
