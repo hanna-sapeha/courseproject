@@ -3,7 +3,6 @@ package com.hanna.sapeha.app.service.model;
 import lombok.Data;
 
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 @Data
 public class ReviewFormDTO {

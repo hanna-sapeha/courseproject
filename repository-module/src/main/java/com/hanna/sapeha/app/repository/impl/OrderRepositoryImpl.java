@@ -11,12 +11,12 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 import java.util.List;
 
-import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.EMAIL_PARAMETER;
+import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.DATE_PARAMETER;
+import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.ID_ATTRIBUTE_NAME;
 import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.NUMBER_OF_ORDER_PARAMETER;
+import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.USER_JOIN_ATTRIBUTE_NAME;
 
 @Repository
 @Log4j2
@@ -31,7 +31,8 @@ public class OrderRepositoryImpl extends GenericRepositoryImpl<Long, Order> impl
 
         CriteriaQuery<Order> orderQuery = criteriaBuilder.createQuery(Order.class);
         Root<Order> orderRoot = orderQuery.from(Order.class);
-        CriteriaQuery<Order> select = orderQuery.select(orderRoot);
+        CriteriaQuery<Order> select = orderQuery.select(orderRoot)
+                .orderBy(criteriaBuilder.asc(orderRoot.get(DATE_PARAMETER)));
 
         TypedQuery<Order> typedQuery = entityManager.createQuery(select);
         if (pageSize < count.intValue()) {
@@ -69,9 +70,10 @@ public class OrderRepositoryImpl extends GenericRepositoryImpl<Long, Order> impl
 
         CriteriaQuery<Order> orderQuery = criteriaBuilder.createQuery(Order.class);
         Root<Order> orderRoot = orderQuery.from(Order.class);
-        Join<Object, User> join = orderRoot.join("user");
+        Join<Object, User> join = orderRoot.join(USER_JOIN_ATTRIBUTE_NAME);
         CriteriaQuery<Order> select = orderQuery.select(orderRoot);
-        orderQuery.where(criteriaBuilder.equal(join.get("id"), idUser));
+        orderQuery.where(criteriaBuilder.equal(join.get(ID_ATTRIBUTE_NAME), idUser));
+        orderQuery.orderBy(criteriaBuilder.asc(orderRoot.get(DATE_PARAMETER)));
 
         TypedQuery<Order> typedQuery = entityManager.createQuery(select);
         if (pageSize < count.intValue()) {

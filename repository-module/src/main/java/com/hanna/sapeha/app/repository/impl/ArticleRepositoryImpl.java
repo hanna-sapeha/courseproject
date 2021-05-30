@@ -44,7 +44,7 @@ public class ArticleRepositoryImpl extends GenericRepositoryImpl<Long, Article> 
             return (Article) query.getSingleResult();
         } catch (NoResultException e) {
             log.error(e.getMessage(), e);
-            throw new RepositoryException("Article with uuid:" + uuid+ " does not exist", e);
+            throw new RepositoryException("Article with uuid:" + uuid + " does not exist", e);
         }
     }
 

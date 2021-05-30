@@ -5,14 +5,4 @@ public enum StatusEnum {
     IN_PROGRESS,
     DELIVERED,
     REJECTED
-
-//    private final String description;
-//
-//    StatusEnum(String description) {
-//        this.description = description;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
 }

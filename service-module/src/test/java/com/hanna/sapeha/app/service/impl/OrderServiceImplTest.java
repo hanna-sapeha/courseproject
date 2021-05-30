@@ -1,10 +1,8 @@
 package com.hanna.sapeha.app.service.impl;
 
 import com.hanna.sapeha.app.repository.OrderRepository;
-import com.hanna.sapeha.app.repository.model.Article;
 import com.hanna.sapeha.app.repository.model.Order;
 import com.hanna.sapeha.app.service.converter.OrderConverter;
-import com.hanna.sapeha.app.service.model.ArticleDTO;
 import com.hanna.sapeha.app.service.model.OrderDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +15,8 @@ import org.mockito.quality.Strictness;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,7 +54,6 @@ class OrderServiceImplTest {
         when(orderConverter.convert(orders)).thenReturn(orderDTOS);
         List<OrderDTO> result = orderService.getOrders();
 
-        assertEquals(id, orders.get(0).getId());
-
+        assertEquals(id, result.get(0).getId());
     }
 }

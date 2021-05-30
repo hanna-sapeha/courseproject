@@ -29,6 +29,7 @@ public class Order {
     @Column(name = "final_price")
     private BigDecimal finalPrice;
     @Column
+    @EqualsAndHashCode.Exclude
     private LocalDate date;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")

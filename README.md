@@ -1,9 +1,11 @@
-# courseproject
+# Final course project
 
-> Outline a brief description of your project.
-> Live demo [_here_](https://www.example.com).
-<!--ссылка на хероку werwe
-If you have the project hosted somewhere, include the link here. -->
+> This is the final project of a java enterprise development course.
+> The project is a site with 4 roles and corresponding different functionality.
+> It is a mini portal where users can view news, add news and also order the necessary items.
+> The purpose of writing the project was to improve code writing skills,
+gaining additional skills in the process of writing, learning to read and follow the terms of reference, finding and eliminating errors.
+
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -15,13 +17,13 @@ If you have the project hosted somewhere, include the link here. -->
 * [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
 * [Contact](#contact)
-<!-- * [License](#license) -->
 
 
 ## General Information
 - Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
+- The purpose of writing the project was to improve code writing skills,
+  gaining additional skills in the process of writing,
+  learning to read and follow the terms of reference, finding and eliminating errors.
 - Why did you undertake it?
 
 
@@ -31,6 +33,7 @@ If you have the project hosted somewhere, include the link here. -->
 - Spring Boot version 2.4.2
 - Hibernate version 5.4.27
 - MySql version 8.0.22
+- REST API
 - Liquibase version 3.10.3
 - Thymeleaf
 - Docker 
