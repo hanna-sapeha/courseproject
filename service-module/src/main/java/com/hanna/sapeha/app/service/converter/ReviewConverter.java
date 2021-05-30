@@ -2,6 +2,7 @@ package com.hanna.sapeha.app.service.converter;
 
 import com.hanna.sapeha.app.repository.model.Review;
 import com.hanna.sapeha.app.service.model.ReviewDTO;
+import com.hanna.sapeha.app.service.model.ReviewFormDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,5 +30,11 @@ public class ReviewConverter {
         }
         reviewDTO.setIsActive(review.getIsActive());
         return reviewDTO;
+    }
+
+    public Review convert(ReviewFormDTO reviewDTO) {
+        Review review = new Review();
+        review.setFeedback(reviewDTO.getFeedback());
+        return review;
     }
 }

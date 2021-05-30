@@ -3,6 +3,7 @@ package com.hanna.sapeha.app.service.converter;
 import com.hanna.sapeha.app.repository.model.Review;
 import com.hanna.sapeha.app.repository.model.User;
 import com.hanna.sapeha.app.service.model.ReviewDTO;
+import com.hanna.sapeha.app.service.model.ReviewFormDTO;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -93,5 +94,14 @@ class ReviewConverterTest {
         List<Review> reviews = Collections.singletonList(review);
         List<ReviewDTO> reviewDTOS = reviewConverter.convert(reviews);
         assertEquals(id, reviewDTOS.get(0).getId());
+    }
+
+    @Test
+    void shouldConvertReviewFormDTOToReviewAndReturnRightFeedback() {
+        ReviewFormDTO reviewFormDTO = new ReviewFormDTO();
+        String feedback = "feedback";
+        reviewFormDTO.setFeedback(feedback);
+        Review review = reviewConverter.convert(reviewFormDTO);
+        assertEquals(feedback, review.getFeedback());
     }
 }

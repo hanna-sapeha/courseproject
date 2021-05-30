@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static com.hanna.sapeha.app.constant.HandlerConstants.API_URL;
 import static com.hanna.sapeha.app.constant.HandlerConstants.ARTICLES_URL;
+import static com.hanna.sapeha.app.constant.HandlerConstants.ITEMS_URL;
+import static com.hanna.sapeha.app.constant.HandlerConstants.LOGIN_URL;
+import static com.hanna.sapeha.app.constant.HandlerConstants.ORDERS_URL;
 import static com.hanna.sapeha.app.constant.HandlerConstants.PROFILE_URL;
 import static com.hanna.sapeha.app.constant.HandlerConstants.REVIEWS_URL;
 import static com.hanna.sapeha.app.constant.HandlerConstants.USERS_URL;
@@ -68,14 +71,16 @@ public class AppSecurityConfig {
             http.authorizeRequests()
                     .antMatchers(USERS_URL + "/add")
                     .permitAll()
-                    .antMatchers(USERS_URL + "/**", REVIEWS_URL + "/**")
+                    .antMatchers(USERS_URL + "/**", REVIEWS_URL, REVIEWS_URL + "/delete", REVIEWS_URL + "/change-status")
                     .hasAuthority(RolesEnum.ADMINISTRATOR.name())
-                    .antMatchers(ARTICLES_URL + "/**", PROFILE_URL + "/**")
+                    .antMatchers(ARTICLES_URL + "/**", ITEMS_URL + "/**", ORDERS_URL + "/**")
                     .hasAnyAuthority(RolesEnum.CUSTOMER_USER.name(), RolesEnum.SALE_USER.name())
+                    .antMatchers(REVIEWS_URL + "/add", PROFILE_URL + "/**")
+                    .hasAuthority(RolesEnum.CUSTOMER_USER.name())
                     .and()
                     .formLogin()
                     .usernameParameter("email")
-                    .loginPage("/login")
+                    .loginPage(LOGIN_URL)
                     .permitAll()
                     .successHandler(new AppSuccessHandler())
                     .and()

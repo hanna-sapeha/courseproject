@@ -21,9 +21,9 @@ public class ReviewRepositoryImpl extends GenericRepositoryImpl<Long, Review> im
         countQuery.select(criteriaBuilder.count(countQuery.from(Review.class)));
         Long count = entityManager.createQuery(countQuery).getSingleResult();
 
-        CriteriaQuery<Review> userQuery = criteriaBuilder.createQuery(Review.class);
-        Root<Review> reviewRoot = userQuery.from(Review.class);
-        CriteriaQuery<Review> select = userQuery.select(reviewRoot);
+        CriteriaQuery<Review> criteriaQuery = criteriaBuilder.createQuery(Review.class);
+        Root<Review> reviewRoot = criteriaQuery.from(Review.class);
+        CriteriaQuery<Review> select = criteriaQuery.select(reviewRoot);
 
         TypedQuery<Review> typedQuery = entityManager.createQuery(select);
         if (pageSize < count.intValue()) {

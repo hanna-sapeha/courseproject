@@ -1,6 +1,6 @@
 package com.hanna.sapeha.app.controller;
 
-import com.hanna.sapeha.app.config.UserDetailsServiceConfig;
+import com.hanna.sapeha.app.config.UserDetailsServiceConfigTest;
 import com.hanna.sapeha.app.service.ItemService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(excludeAutoConfiguration = UserDetailsServiceAutoConfiguration.class,
         controllers = ItemAPIController.class)
-@Import(UserDetailsServiceConfig.class)
+@Import(UserDetailsServiceConfigTest.class)
 class ItemSecurityAPITest {
 
     @Autowired

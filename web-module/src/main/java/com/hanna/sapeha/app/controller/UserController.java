@@ -40,8 +40,8 @@ public class UserController {
 
     @PostMapping("/add")
     public String addUser(@Valid UserDTO user,
-                          @RequestParam(value = "roleId", required = false) Long roleId,
-                          BindingResult errors) {
+                          BindingResult errors,
+                          @RequestParam(value = "roleId", required = false) Long roleId) {
         if (errors.hasErrors()) {
             return "register-user";
         } else {

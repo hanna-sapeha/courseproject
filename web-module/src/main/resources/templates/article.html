@@ -45,7 +45,7 @@
             </div>
             <p th:text="${comment.content}"></p>
             <div th:if="${role}=='SALE_USER'">
-                <form action="#" th:action="@{/comment/delete}" th:method="post">
+                <form action="#" th:action="@{/comments/delete}" th:method="post">
                     <lable for="deleteComment"></lable>
                     <input type="hidden" name="idCommentForDelete" th:value="${comment.id}" id="deleteComment">
                     <input type="hidden" name="uuidArticle" th:value="${article.uuid}">

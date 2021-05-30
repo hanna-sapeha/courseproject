@@ -3,6 +3,8 @@ package com.hanna.sapeha.app.controller;
 import com.hanna.sapeha.app.service.ItemService;
 import com.hanna.sapeha.app.service.model.ItemDTO;
 import com.hanna.sapeha.app.service.model.PageDTO;
+import com.hanna.sapeha.app.service.model.UserLogin;
+import com.hanna.sapeha.app.util.ControllerUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +26,8 @@ public class ItemController {
                            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber) {
         PageDTO<ItemDTO> page = itemService.getAllByPagination(pageNumber, DEFAULT_PAGE_SIZE);
         model.addAttribute("page", page);
+        UserLogin user = ControllerUtil.getAuthorizedUser();
+        model.addAttribute("role", user.getRoleName());
         return "items";
     }
 
@@ -43,6 +47,8 @@ public class ItemController {
     public String getItem(Model model, @PathVariable UUID uuid) {
         ItemDTO item = itemService.getItemByUniqueNumber(uuid);
         model.addAttribute("item", item);
+        String role = ControllerUtil.getAuthorizedUser().getRoleName();
+        model.addAttribute("role", role);
         return "item";
     }
 }

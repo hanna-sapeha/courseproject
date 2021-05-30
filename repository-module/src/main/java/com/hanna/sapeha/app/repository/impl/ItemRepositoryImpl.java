@@ -16,6 +16,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.UUID;
 
+import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.ITEM_NAME_PARAMETER;
 import static com.hanna.sapeha.app.repository.constant.RepositoryConstants.UNIQUE_NUMBER_PARAMETER;
 
 @Repository
@@ -31,7 +32,8 @@ public class ItemRepositoryImpl extends GenericRepositoryImpl<Long, Item> implem
 
         CriteriaQuery<Item> itemQuery = criteriaBuilder.createQuery(Item.class);
         Root<Item> itemRoot = itemQuery.from(Item.class);
-        CriteriaQuery<Item> select = itemQuery.select(itemRoot);
+        CriteriaQuery<Item> select = itemQuery.select(itemRoot)
+                .orderBy(criteriaBuilder.asc(itemRoot.get(ITEM_NAME_PARAMETER)));
         TypedQuery<Item> typedQuery = entityManager.createQuery(select);
         if (pageSize < count.intValue()) {
             typedQuery.setFirstResult(RepositoryUtil.getStartPosition(pageNumber, pageSize));
@@ -48,6 +50,7 @@ public class ItemRepositoryImpl extends GenericRepositoryImpl<Long, Item> implem
             item.setId(null);
             UUID uuid = UUID.randomUUID();
             item.setUniqueNumber(uuid);
+            item.setName(String.format("%s - Copy", item.getName()));
             entityManager.persist(item);
             return item;
         } catch (IllegalArgumentException e) {

@@ -148,25 +148,4 @@ class ArticleAPIControllerTest {
         String content = result.getResponse().getContentAsString();
         assertThat(content).isEqualToIgnoringWhitespace(objectMapper.writeValueAsString(error));
     }
-
-    @Test
-    void shouldAddNotValidDateArticle() throws Exception {
-        ArticleFormDTO articleForm = new ArticleFormDTO();
-        articleForm.setTitle("article");
-        articleForm.setContent("content");
-        articleForm.setDateAdded(null);
-
-        MvcResult result = mockMvc.perform(
-                post(API_URL + ARTICLES_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(articleForm))
-        ).andExpect(status().isBadRequest()).andReturn();
-
-        ErrorDTO error = new ErrorDTO();
-        String errorMessage = "must not be null";
-        error.add(errorMessage);
-
-        String content = result.getResponse().getContentAsString();
-        assertThat(content).isEqualToIgnoringWhitespace(objectMapper.writeValueAsString(error));
-    }
 }

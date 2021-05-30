@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 @Data
 public class ArticleFormDTO {
-    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateAdded;
     @NotNull
