@@ -1,14 +1,13 @@
 # Final course project
 
 > This is the final project of a java enterprise development course.
-> The project is a site with 4 roles and corresponding different functionality.
-> It is a mini portal where users can view news, add news and also order the necessary items.
-> The purpose of writing the project was to improve code writing skills,
-gaining additional skills in the process of writing, learning to read and follow the terms of reference, finding and eliminating errors.
+> Project: Web Application with authorization which contains a couple of functionality with CRUD operations and REST API.
+> Web Application is a mini portal where users can view and add news, order necessary items and read articles.
+> The main goal of the project is to improve hard skills: code writing, software architecture, debugging, exception handling, testing (unit tests).
 
 
 ## Table of Contents
-* [General Info](#general-information)
+
 * [Technologies Used](#technologies-used)
 * [Features](#features)
 * [Screenshots](#screenshots)
@@ -19,36 +18,36 @@ gaining additional skills in the process of writing, learning to read and follow
 * [Contact](#contact)
 
 
-## General Information
-- Provide general information about your project here.
-- The purpose of writing the project was to improve code writing skills,
-  gaining additional skills in the process of writing,
-  learning to read and follow the terms of reference, finding and eliminating errors.
-- Why did you undertake it?
-
-
 ## Technologies Used
-- Java 11 
+
+- Java 11
 - Apache Maven 3.6.3
 - Spring Boot version 2.4.2
-- Hibernate version 5.4.27
+  - Spring Web MVC
+  - Spring REST
+  - Spring Security
+  - Unit and integration test from package spring boot test
+- Hibernate ORM version 5.4.27
 - MySql version 8.0.22
-- REST API
 - Liquibase version 3.10.3
+- HQL, Criteria
 - Thymeleaf
-- Docker 
-- JUnit tests
+- Html, Css
+- Docker
+- GIT
+- Bootstrap 5
 
 
 ## Features
+
 The project was completed on the basis of the provided technical specifications:   
 [Technical requirement Part 1](https://drive.google.com/file/d/1m2U3jTP7U_7-dGgwy0wrM0xnL0Qv3UJL/view?usp=sharing)   
 [Technical requirement Part 2](https://drive.google.com/file/d/1zkA6g8y3KUCFC7zA_wO0GbW5To0AhG6_/view?usp=sharing)   
 [Technical requirement Part 3](https://drive.google.com/file/d/11R7hRtuaYcbfybbuRA4LJp6840P6nXZG/view?usp=sharing)   
-[Technical requirement Part 4](https://drive.google.com/file/d/1e9PlxdckWu0Mrd_M1qT-xkPCvoGJE9JQ/view?usp=sharing)   
-
+[Technical requirement Part 4](https://drive.google.com/file/d/1e9PlxdckWu0Mrd_M1qT-xkPCvoGJE9JQ/view?usp=sharing)
 
 ## Screenshots
+
 ![users-page](./img/users-page.png)
 ![reviews-page](./img/reviews-page.PNG)
 ![items-page](img/items-page.png)
@@ -57,8 +56,8 @@ The project was completed on the basis of the provided technical specifications:
 ![orders-page](img/orders-page.PNG)
 ![order-page](img/some-order-page.PNG)
 
-
 ## Setup
+
 - Install Java SE Development Kit 11
 - Install maven
 - Install and run Docker
@@ -66,25 +65,23 @@ The project was completed on the basis of the provided technical specifications:
 - Run the provided [docker-compose](/docker-compose.yml) file.
 - Go to the address in your browser [localhost:8080/login](http://localhost:8080/login)
 
-
 ## Project Status
 
 Project is: _complete_.  
 Project has been completed at the end of the Java enterprise development course.
 
-
 ## Room for Improvement
 
 Room for improvement:
+
 - Add the ability to write comments on articles
 - Add a page to view user's feedback on the site
-
 
 ## Acknowledgements
 
 - This project was suggested by the IT academy course tutor Artsiom Peravoznikay as a course project
 - Many thanks to IT-academy, the course tutor Artsiom Peravoznikay and my fellow students.
 
-
 ## Contact
+
 Created by hanna.sapeha@protonmail.com - feel free to contact me!
