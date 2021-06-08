@@ -202,4 +202,45 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="11" author="hanna.sapeha@protonmail.com">
+        <createTable tableName="orders">
+            <column name="id" type="int(11)" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="status" type="varchar(40)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="number_of_order" type="varchar(40)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="item_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="count_of_item" type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="final_price" type="decimal(20,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="date" type="date" defaultValueComputed="(NOW())">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="orders"
+                                 constraintName="fk_user_orders"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user"/>
+        <addForeignKeyConstraint baseColumnNames="item_id"
+                                 baseTableName="orders"
+                                 constraintName="fk_item_orders"
+                                 onDelete="CASCADE"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item"/>
+    </changeSet>
 </databaseChangeLog>

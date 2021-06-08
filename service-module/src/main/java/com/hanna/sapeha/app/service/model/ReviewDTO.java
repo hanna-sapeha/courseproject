@@ -1,8 +1,6 @@
 package com.hanna.sapeha.app.service.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 

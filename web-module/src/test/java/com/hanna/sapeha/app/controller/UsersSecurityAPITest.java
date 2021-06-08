@@ -1,7 +1,7 @@
 package com.hanna.sapeha.app.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanna.sapeha.app.config.UserDetailsServiceConfig;
+import com.hanna.sapeha.app.config.UserDetailsServiceConfigTest;
 import com.hanna.sapeha.app.service.UserService;
 import com.hanna.sapeha.app.service.model.UserDTO;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(excludeAutoConfiguration = UserDetailsServiceAutoConfiguration.class,
         controllers = UserAPIController.class)
-@Import(UserDetailsServiceConfig.class)
+@Import(UserDetailsServiceConfigTest.class)
 class UsersSecurityAPITest {
 
     @Autowired

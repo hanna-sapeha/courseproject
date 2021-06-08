@@ -58,6 +58,7 @@ public class UserLogin implements UserDetails {
     public String getRoleName() {
         return this.user.getRole().getRoleName().name();
     }
+
     public Long getId() {
         return this.user.getId();
     }

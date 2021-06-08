@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Configuration
-public class UserDetailsServiceConfig {
+public class UserDetailsServiceConfigTest {
 
     @Bean
     public UserDetailsService userDetailsService() {

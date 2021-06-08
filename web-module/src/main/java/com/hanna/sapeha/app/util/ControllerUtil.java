@@ -16,4 +16,9 @@ public class ControllerUtil {
         UserLogin user = getAuthorizedUser();
         return user.getRoleName().equals(RolesEnum.SALE_USER.name());
     }
+
+    public static boolean isAuthorizedAsCustomerUser() {
+        UserLogin user = getAuthorizedUser();
+        return user.getRoleName().equals(RolesEnum.CUSTOMER_USER.name());
+    }
 }

@@ -1,6 +1,7 @@
 package com.hanna.sapeha.app.repository.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Item {
     private String name;
     @Column(name = "unique_number")
     @Type(type = "uuid-char")
+    @EqualsAndHashCode.Exclude
     private UUID uniqueNumber;
     @Column
     private BigDecimal price;

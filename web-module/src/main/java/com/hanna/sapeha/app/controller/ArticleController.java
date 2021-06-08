@@ -31,7 +31,6 @@ public class ArticleController {
                              @RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
                              @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber) {
         PageDTO<ArticleDTO> page = articleService.getAllByPagination(pageNumber, pageSize);
-        log.info("{}", page.getObjects());
         model.addAttribute("page", page);
         UserLogin user = ControllerUtil.getAuthorizedUser();
         model.addAttribute("role", user.getRoleName());
