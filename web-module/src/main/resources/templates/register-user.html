@@ -10,12 +10,12 @@
 <div style="width: 25%; margin-left: auto; margin-right: auto;">
     <form action="#" th:action="@{/users/add}" th:object="${userDTO}" method="post">
         <div class="mb-3">
-            <label for="firstname" class="form-label">Firstname</label>
+            <label for="firstname" class="form-label">First name</label>
             <input type="text" th:field="*{firstname}" class="form-control" id="firstname" aria-describedby="emailHelp">
             <td th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Name Error</td>
         </div>
         <div class="mb-3">
-            <label for="lastname" class="form-label">Lastname</label>
+            <label for="lastname" class="form-label">Last name</label>
             <input type="text" th:field="*{lastname}" class="form-control" id="lastname" aria-describedby="emailHelp">
             <td th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Name Error</td>
         </div>

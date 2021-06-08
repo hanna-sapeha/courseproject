@@ -80,8 +80,9 @@ Room for improvement:
 ## Acknowledgements
 
 - This project was suggested by the IT academy course tutor Artsiom Peravoznikay as a course project
-- Many thanks to IT-academy, the course tutor Artsiom Peravoznikay and my fellow students.
+- Many thanks to IT-academy, my teacher Artsiom Peravoznikay and my fellow students.
 
 ## Contact
 
-Created by hanna.sapeha@protonmail.com - feel free to contact me!
+Created by [Hanna Sapeha](https://www.linkedin.com/in/hanna-sapeha/)  
+hanna.sapeha@protonmail.com - feel free to contact me!
